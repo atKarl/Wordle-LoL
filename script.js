@@ -1,0 +1,2 @@
+const targetWords =[];
+const dictionary = [];
