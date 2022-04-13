@@ -75,6 +75,7 @@ let names = [
   "missfortune",
   "mordekaiser",
   "morgana",
+  "mundo",
   "nami",
   "nasus",
   "nautilus",
@@ -161,9 +162,6 @@ let six = [];
 let five = [];
 let seven = [];
 let four = [];
-<<<<<<< Updated upstream
-
-=======
 let fiveName = [
   "rakan",
   "yasuo",
@@ -658,7 +656,6 @@ let fiveName = [
   "brand",
   "taric",
 ];
->>>>>>> Stashed changes
 
 for (let i = 0; i < names.length; i++) {
   switch (names[i].length) {
@@ -677,24 +674,15 @@ for (let i = 0; i < names.length; i++) {
   }
 }
 
-<<<<<<< Updated upstream
-const targetWords = [...five];
-const dictionary = [...five];
-const WORD_LENGTH = 5;
-// const offsetFromDate = new Date(2022, 0, 1);
-// const msOffset = Date.now() - offsetFromDate;
-// const dayOffset = msOffset /1000 / 60 / 60 / 24;
-=======
 const targetWords = [...fiveName];
 const dictionary = [...five];
 const WORD_LENGTH = 5;
 const offsetFromDate = new Date(2022, 3, 13);
 const msOffset = Date.now() - offsetFromDate;
 const dayOffset = msOffset / 1000 / 60 / 60 / 24;
->>>>>>> Stashed changes
 const FLIP_ANIMATION_DURATION = 500;
 const DANCE_ANIMATION_DURATION = 500;
-const targetWord = targetWords[Math.floor(Math.random() * targetWords.length)];
+const targetWord = targetWords[Math.floor(dayOffset)];
 const keyboard = document.querySelector("[data-keyboard]");
 let guessGrid = document.querySelector("[data-guess-grid]");
 let alertContainer = document.querySelector("[data-alert-container]");
@@ -844,10 +832,10 @@ let checkWinLose = (guess, tiles) => {
     stopInteraction();
     return;
   }
-  const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])")
-  if (remainingTiles.length===0){
-      showAlert(targetWord.toLocaleUpperCase(), null);
-      stopInteraction();
+  const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])");
+  if (remainingTiles.length === 0) {
+    showAlert(targetWord.toLocaleUpperCase(), null);
+    stopInteraction();
   }
 };
 
@@ -862,9 +850,8 @@ let danceTiles = (tiles) => {
         },
         { once: true }
       );
-    }, index * DANCE_ANIMATION_DURATION / 5);
+    }, (index * DANCE_ANIMATION_DURATION) / 5);
   });
 };
 
 startInteraction();
-
