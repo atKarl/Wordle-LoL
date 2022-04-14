@@ -22,6 +22,8 @@
   "corki",
   "darius",
   "diana",
+  "draven",
+  "drmundo",
   "ekko",
   "elise",
   "evelynn",
@@ -127,6 +129,7 @@
   "trundle",
   "tryndamere",
   "twistedfate",
+  "twitch",
   "udyr",
   "urgot",
   "varus",
@@ -154,5 +157,5 @@
   "ziggs",
   "zilean",
   "zoe",
-  "zyra"
-]
+  "zyra",
+];
