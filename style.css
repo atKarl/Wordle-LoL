@@ -78,7 +78,6 @@ body {
   justify-content: center;
   align-content: center;
   flex-grow: 1;
-
   grid-template-columns: repeat(var(--number-rows), 4em);
   grid-template-rows: repeat(6, 4em);
   gap: 0.25em;
@@ -207,5 +206,5 @@ body {
 }
 
 svg {
-  pointer-events: none
+  pointer-events: none;
 }
