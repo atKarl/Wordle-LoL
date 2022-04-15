@@ -31,3 +31,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## License
 [GPL3](https://choosealicense.com/licenses/gpl-3.0/)
+
+## Disclaimer 
+
+'LoLdle' isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.
