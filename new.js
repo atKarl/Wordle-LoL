@@ -2096,8 +2096,6 @@ function intialize() {
   document.addEventListener("keyup", (e) => {
     processInput(e);
   });
-  // listen for mouse clicks
-  document.addEventListener("click", handleMouseClick);
 }
 
 function processKey() {
@@ -2149,9 +2147,12 @@ function update() {
   }
 
   guess = guess.toLowerCase(); //case sensitive
-
+if (guess.length<WORD_LENGTH){
+  showAlert(`Please enter a ${WORD_LENGTH} letter word.`);
+  return;
+}
   if (!dictionary.includes(guess)) {
-    document.getElementById("answer").innerText = "Not in word list";
+    showAlert("Enter a champion name");
     return;
   }
 
@@ -2189,6 +2190,7 @@ function update() {
     }
 
     if (correct == WORD_LENGTH) {
+      showAlert("You Found The Right Champion", 5000);
       gameOver = true;
     }
   }
@@ -2228,17 +2230,27 @@ function update() {
   col = 0; //start at 0 for new row
 }
 
-let handleMouseClick = (e) => {
-  if (e.target.matches("[data-key]")) {
-    processKey(e.target.dataset.key);
-    return;
-  }
-  if (e.target.matches("[data-enter]")) {
-    update();
-    return;
-  }
-  if (e.target.matches("[data-delete]")) {
-    deleteKey();
-    return;
-  }
+let showAlert = (message, duration = 1000) => {
+  const alert = document.createElement("div");
+  alert.textContent = message;
+  alert.classList.add("alert");
+  alertContainer.prepend(alert);
+  if (duration === null) return;
+  setTimeout(() => {
+    alert.classList.add("hide");
+    alert.addEventListener("transitionend", () => alert.remove());
+  }, duration);
+};
+
+let shakeTiles = (tiles) => {
+  tiles.forEach((tile) => {
+    tile.classList.add("shake");
+    tile.addEventListener(
+      "animationend",
+      () => {
+        tile.classList.remove("shake");
+      },
+      { once: true }
+    );
+  });
 };
