@@ -4,6 +4,9 @@
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
+:root {
+  --number-rows: 0;
+}
 
 body {
   background-color: hsl(240, 3%, 7%);
@@ -75,7 +78,7 @@ body {
   justify-content: center;
   align-content: center;
   flex-grow: 1;
-  grid-template-columns: repeat(5, 4em);
+  grid-template-columns: repeat(var(--number-rows), 4em);
   grid-template-rows: repeat(6, 4em);
   gap: 0.25em;
   margin-bottom: 1em;
@@ -199,5 +202,9 @@ body {
 
 .alert.hide {
   opacity: 0;
+  pointer-events: none;
+}
+
+svg {
   pointer-events: none;
 }
