@@ -2112,6 +2112,7 @@ function processInput(e) {
       let currTile = document.getElementById(
         row.toString() + "-" + col.toString()
       );
+      animateCSS(currTile, "zoomIn");
       if (currTile.innerText == "") {
         currTile.innerText = e.code[3];
         col += 1;
@@ -2124,6 +2125,7 @@ function processInput(e) {
     let currTile = document.getElementById(
       row.toString() + "-" + col.toString()
     );
+    animateCSS(currTile, "swing")
     currTile.innerText = "";
   } else if (e.code == "Enter") {
     update();
@@ -2131,7 +2133,8 @@ function processInput(e) {
 
   if (!gameOver && row == NUMBER_OF_GUESSES) {
     gameOver = true;
-    document.getElementById("answer").innerText = targetWord;
+    toastr.info(`Today's champion was ${targetWord}`);
+    toastr.error("You've run out of guesses! Game over!");
   }
 }
 
@@ -2147,12 +2150,12 @@ function update() {
   }
 
   guess = guess.toLowerCase(); //case sensitive
-if (guess.length<WORD_LENGTH){
-  showAlert(`Please enter a ${WORD_LENGTH} letter word.`);
-  return;
-}
+  if (guess.length < WORD_LENGTH) {
+    toastr.error(`Please enter a ${WORD_LENGTH} letter word.`);
+    return;
+  }
   if (!dictionary.includes(guess)) {
-    showAlert("Enter a champion name");
+    toastr.error("Enter a champion name");
     return;
   }
 
@@ -2174,6 +2177,7 @@ if (guess.length<WORD_LENGTH){
   for (let c = 0; c < WORD_LENGTH; c++) {
     let currTile = document.getElementById(row.toString() + "-" + c.toString());
     let letter = currTile.innerText;
+    
 
     //Is it in the correct position?
     if (targetWord[c] == letter.toLowerCase()) {
@@ -2189,8 +2193,11 @@ if (guess.length<WORD_LENGTH){
       letterCount[letter.toLowerCase()] -= 1; //deduct the letter count
     }
 
-    if (correct == WORD_LENGTH) {
-      showAlert("You Found The Right Champion", 5000);
+    if (correct === WORD_LENGTH) {
+      toastr.success("You Found The Right Champion");
+      tiles = document.getElementsByClassName("tile correct");
+      console.log(tiles);
+      
       gameOver = true;
     }
   }
@@ -2199,7 +2206,7 @@ if (guess.length<WORD_LENGTH){
   for (let c = 0; c < WORD_LENGTH; c++) {
     let currTile = document.getElementById(row.toString() + "-" + c.toString());
     let letter = currTile.innerText;
-    const key = keyboard.querySelector(`[data-key="${letter}"i]`);
+
 
     // skip the letter if it has been marked correct
     if (!currTile.classList.contains("correct")) {
@@ -2230,27 +2237,22 @@ if (guess.length<WORD_LENGTH){
   col = 0; //start at 0 for new row
 }
 
-let showAlert = (message, duration = 1000) => {
-  const alert = document.createElement("div");
-  alert.textContent = message;
-  alert.classList.add("alert");
-  alertContainer.prepend(alert);
-  if (duration === null) return;
-  setTimeout(() => {
-    alert.classList.add("hide");
-    alert.addEventListener("transitionend", () => alert.remove());
-  }, duration);
-};
+const animateCSS = (element, animation, prefix = "animate__") =>
+  // We create a Promise and return it
+  new Promise((resolve, reject) => {
+    const animationName = `${prefix}${animation}`;
+    // const node = document.querySelector(element);
+    const node = element;
+    node.style.setProperty("--animate-duration", "0.5s");
 
-let shakeTiles = (tiles) => {
-  tiles.forEach((tile) => {
-    tile.classList.add("shake");
-    tile.addEventListener(
-      "animationend",
-      () => {
-        tile.classList.remove("shake");
-      },
-      { once: true }
-    );
+    node.classList.add(`${prefix}animated`, animationName);
+
+    // When the animation ends, we clean the classes and resolve the Promise
+    function handleAnimationEnd(event) {
+      event.stopPropagation();
+      node.classList.remove(`${prefix}animated`, animationName);
+      resolve("Animation ended");
+    }
+
+    node.addEventListener("animationend", handleAnimationEnd, { once: true });
   });
-};
