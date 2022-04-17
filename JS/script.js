@@ -2035,7 +2035,6 @@ let row = 0;
 let col = 0;
 let gameOver = false;
 
-
 window.onload = function () {
   intialize();
   initStatsModal();
@@ -2145,6 +2144,7 @@ function processInput(e) {
 
 function update() {
   let guess = "";
+  const delay = 300;
 
   //string up the guesses into the word
   for (let c = 0; c < WORD_LENGTH; c++) {
@@ -2181,60 +2181,64 @@ function update() {
   for (let c = 0; c < WORD_LENGTH; c++) {
     let currTile = document.getElementById(row.toString() + "-" + c.toString());
     let letter = currTile.innerText;
+    setTimeout(() => {
+      animateCSS(currTile, "rotateIn");
+      //Is it in the correct position?
+      if (targetWord[c] == letter.toLowerCase()) {
+        currTile.classList.add("correct");
 
-    //Is it in the correct position?
-    if (targetWord[c] == letter.toLowerCase()) {
-      currTile.classList.add("correct");
+        let keyTile = document.getElementById("Key" + letter);
+        keyTile.classList.remove("wrong-location");
+        keyTile.classList.add("correct");
+        // key.classList.add("correct")
 
-      let keyTile = document.getElementById("Key" + letter);
-      keyTile.classList.remove("wrong-location");
-      keyTile.classList.add("correct");
-      // key.classList.add("correct")
+        correct += 1;
 
-      correct += 1;
+        letterCount[letter.toLowerCase()] -= 1; //deduct the letter count
+      }
 
-      letterCount[letter.toLowerCase()] -= 1; //deduct the letter count
-    }
-
-    if (correct === WORD_LENGTH) {
-      toastr.success("You Found The Right Champion");
-      let totalWins = window.localStorage.getItem("totalWins") || 0;
-      window.localStorage.setItem("totalWins", Number(totalWins) + 1);
-      let currentStreak = window.localStorage.getItem("currentStreak") || 0;
-      window.localStorage.setItem("currentStreak", Number(currentStreak) + 1);
-      updateTotalGames();
-      gameOver = true;
-    }
+      if (correct === WORD_LENGTH) {
+        toastr.success("You Found The Right Champion");
+        let totalWins = window.localStorage.getItem("totalWins") || 0;
+        window.localStorage.setItem("totalWins", Number(totalWins) + 1);
+        let currentStreak = window.localStorage.getItem("currentStreak") || 0;
+        window.localStorage.setItem("currentStreak", Number(currentStreak) + 1);
+        updateTotalGames();
+        gameOver = true;
+      }
+    }, delay * c);
   }
 
   //go again and mark which ones are present but in wrong position
   for (let c = 0; c < WORD_LENGTH; c++) {
     let currTile = document.getElementById(row.toString() + "-" + c.toString());
     let letter = currTile.innerText;
+    setTimeout(() => {
+      animateCSS(currTile, "rotateIn");
+      // skip the letter if it has been marked correct
+      if (!currTile.classList.contains("correct")) {
+        //Is it in the word?         //make sure we don't double count
+        if (
+          targetWord.includes(letter.toLowerCase()) &&
+          letterCount[letter.toLowerCase()] > 0
+        ) {
+          currTile.classList.add("wrong-location");
 
-    // skip the letter if it has been marked correct
-    if (!currTile.classList.contains("correct")) {
-      //Is it in the word?         //make sure we don't double count
-      if (
-        targetWord.includes(letter.toLowerCase()) &&
-        letterCount[letter.toLowerCase()] > 0
-      ) {
-        currTile.classList.add("wrong-location");
-
-        let keyTile = document.getElementById("Key" + letter);
-        if (!keyTile.classList.contains("correct")) {
-          keyTile.classList.add("wrong-location");
-          // key.classList.add("wrong-location")
+          let keyTile = document.getElementById("Key" + letter);
+          if (!keyTile.classList.contains("correct")) {
+            keyTile.classList.add("wrong-location");
+            // key.classList.add("wrong-location")
+          }
+          letterCount[letter.toLowerCase()] -= 1;
+        } // Not in the word or (was in word but letters all used up to avoid overcount)
+        else {
+          currTile.classList.add("wrong");
+          let keyTile = document.getElementById("Key" + letter);
+          keyTile.classList.add("wrong");
+          // key.classList.add("wrong")
         }
-        letterCount[letter.toLowerCase()] -= 1;
-      } // Not in the word or (was in word but letters all used up to avoid overcount)
-      else {
-        currTile.classList.add("wrong");
-        let keyTile = document.getElementById("Key" + letter);
-        keyTile.classList.add("wrong");
-        // key.classList.add("wrong")
       }
-    }
+    }, delay * c);
   }
   let totalGuesses = window.localStorage.getItem("totalGuesses") || 0;
   window.localStorage.setItem("totalGuesses", Number(totalGuesses) + 1);
@@ -2248,7 +2252,7 @@ const animateCSS = (element, animation, prefix = "animate__") =>
     const animationName = `${prefix}${animation}`;
     // const node = document.querySelector(element);
     const node = element;
-    node.style.setProperty("--animate-duration", "0.5s");
+    node.style.setProperty("--animate-duration", "0.4s");
 
     node.classList.add(`${prefix}animated`, animationName);
 

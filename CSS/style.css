@@ -144,10 +144,7 @@ header h1 {
   grid-template-rows: repeat(6, 4em);
   gap: 0.25em;
   margin-bottom: 1em;
-  
-  ;
 }
-
 
 .tile {
   color: white;
@@ -302,9 +299,8 @@ h3 {
   color: #d7dadc;
   text-align: center;
 }
-.modal-content-help{
+.modal-content-help {
   margin-top: 15px;
-
 }
 .modal-content img {
   width: 100%;
@@ -332,22 +328,19 @@ h3 {
 .stats-group {
   display: flex;
   text-align: center;
-  
+
   justify-content: space-evenly;
 }
 
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .board {
+    grid-template-columns: repeat(var(--number-rows), 3.6em);
+    grid-template-rows: repeat(6, 3.6em);
+    gap: 0.12em;
+  }
 
-  @media only screen and (max-width: 768px) {
-    /* For mobile phones: */
-    .board{
-      grid-template-columns: repeat(var(--number-rows), 3.6em);
-      grid-template-rows: repeat(6, 3.6em);
-      gap: 0.12em;}
-
-
-      .modal-content {
-        width: 70%;
-      }
-     
-    }
-    
+  .modal-content {
+    width: 70%;
+  }
+}
