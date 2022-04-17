@@ -147,15 +147,6 @@ header h1 {
   
   ;
 }
-@media only screen and (max-width: 768px) {
-  /* For mobile phones: */
-  .board{
-    grid-template-columns: repeat(var(--number-rows), 3.7em);
-    grid-template-rows: repeat(6, 3.7em);
-    gap: 0.15em;
-   
-  }
-  }
 
 
 .tile {
@@ -303,13 +294,17 @@ h3 {
 
 .modal-content {
   background-color: #19191a;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 5% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 70%; /* Could be more or less, depending on screen size */
+  width: 500px; /* Could be more or less, depending on screen size */
   border-radius: 15px;
   color: #d7dadc;
   text-align: center;
+}
+.modal-content-help{
+  margin-top: 15px;
+
 }
 .modal-content img {
   width: 100%;
@@ -341,8 +336,18 @@ h3 {
   justify-content: space-evenly;
 }
 
-/* #help-modal {
-  overflow: hidden;
-  margin-top: 10px;
-  height: 70%;
-} */
+
+  @media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .board{
+      grid-template-columns: repeat(var(--number-rows), 3.6em);
+      grid-template-rows: repeat(6, 3.6em);
+      gap: 0.12em;}
+
+
+      .modal-content {
+        width: 70%;
+      }
+     
+    }
+    
