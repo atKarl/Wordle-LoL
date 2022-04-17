@@ -23,11 +23,11 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Credits
 
-[Wordle](https://www.nytimes.com/games/wordle/index.html) for the revolutionary idea.
+[Wordle](https://www.nytimes.com/games/wordle/index.html)
 
-[LouanBen](https://github.com/LouanBen) for the motivation.
+[LouanBen](https://github.com/LouanBen)
 
-[WebDevSimplified](https://github.com/WebDevSimplified) for the initial code and structure.
+[WebDevSimplified](https://github.com/WebDevSimplified)
 
 [ImKennyYip](https://github.com/ImKennyYip)
 
