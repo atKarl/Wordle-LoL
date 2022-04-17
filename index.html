@@ -4,25 +4,36 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="icon" href="img/favicon.ico" />
     <link rel="stylesheet" href="/CSS/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
     <script src="/JS/script.js" defer></script>
-    <script
-      src="https://kit.fontawesome.com/23efecdd7b.js"
-      crossorigin="anonymous"
-    ></script>
     <title>Trundle</title>
   </head>
   <body>
     <game>
       <header>
-        <div class="icon"></div>
+        <div id="help" class="icon">
+          <img src="img/question-mark.png" alt="help" />
+        </div>
         <h1>TRUNDLE</h1>
-        <div class="icon"></div>
+        <div id="stats" class="icon">
+          <img src="img/stats.png" alt="statistics" />
+        </div>
       </header>
       <div class="alert-container" data-alert-container></div>
       <div id="board" data-board class="board"></div>
@@ -74,9 +85,60 @@
     </game>
     <footer></footer>
     <script
-src="https://code.jquery.com/jquery-3.6.0.min.js"
-integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <div class="modal-list">
+      <div id="help-modal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close" id="close-help">&times;</span>
+
+          <p>Guess the champion name in 6 tries.</p>
+
+          <p>
+            Each guess must be a valid champion name. Hit the enter button to
+            submit.
+          </p>
+
+          <p>
+            After each guess, the color of the tiles will change to show how
+            close your guess was to the word.
+          </p>
+          <p>A new champion name will be available each day!</p>
+
+          <img src="/img/examples.png" id="examples" alt="How to play" />
+
+          <hr />
+          This is an open source version of the word guessing game
+          <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a> -
+          check out the code
+          <a href="https://github.com/atKarl/Wordle-LoL">here.</a>
+        </div>
+      </div>
+      <div id="stats-modal" class="modal">
+        <div class="modal-content">
+          <span class="close" id="close-stats">&times;</span>
+
+          <h2>STATISTICS</h2>
+          <div class="stats-group">
+            <h3>
+              <strong>Total Games</strong>: <span id="total-played"></span>
+            </h3>
+
+            <h3><strong>Wins</strong>: <span id="total-wins"></span></h3>
+
+            <h3><strong>Win rate</strong>: <span id="win-pct"></span></h3>
+            <h3>
+              <strong>Average Guesses</strong>: <span id="avg-guesses"></span>
+            </h3>
+
+            <h3><strong>Streak</strong>: <span id="current-streak"></span></h3>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

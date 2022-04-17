@@ -2038,6 +2038,9 @@ let alertContainer = document.querySelector("[data-alert-container]");
 
 window.onload = function () {
   intialize();
+  initStatsModal();
+  initHelpModal();
+  showModal();
 };
 
 function intialize() {
@@ -2125,13 +2128,15 @@ function processInput(e) {
     let currTile = document.getElementById(
       row.toString() + "-" + col.toString()
     );
-    animateCSS(currTile, "swing")
+    animateCSS(currTile, "swing");
     currTile.innerText = "";
   } else if (e.code == "Enter") {
     update();
   }
 
   if (!gameOver && row == NUMBER_OF_GUESSES) {
+    window.localStorage.setItem("currentStreak", 0);
+    updateTotalGames();
     gameOver = true;
     toastr.info(`Today's champion was ${targetWord}`);
     toastr.error("You've run out of guesses! Game over!");
@@ -2140,7 +2145,6 @@ function processInput(e) {
 
 function update() {
   let guess = "";
-  document.getElementById("answer").innerText = "";
 
   //string up the guesses into the word
   for (let c = 0; c < WORD_LENGTH; c++) {
@@ -2177,7 +2181,6 @@ function update() {
   for (let c = 0; c < WORD_LENGTH; c++) {
     let currTile = document.getElementById(row.toString() + "-" + c.toString());
     let letter = currTile.innerText;
-    
 
     //Is it in the correct position?
     if (targetWord[c] == letter.toLowerCase()) {
@@ -2195,9 +2198,11 @@ function update() {
 
     if (correct === WORD_LENGTH) {
       toastr.success("You Found The Right Champion");
-      tiles = document.getElementsByClassName("tile correct");
-      console.log(tiles);
-      
+      let totalWins = window.localStorage.getItem("totalWins") || 0;
+      window.localStorage.setItem("totalWins", Number(totalWins) + 1);
+      let currentStreak = window.localStorage.getItem("currentStreak") || 0;
+      window.localStorage.setItem("currentStreak", Number(currentStreak) + 1);
+      updateTotalGames();
       gameOver = true;
     }
   }
@@ -2206,7 +2211,6 @@ function update() {
   for (let c = 0; c < WORD_LENGTH; c++) {
     let currTile = document.getElementById(row.toString() + "-" + c.toString());
     let letter = currTile.innerText;
-
 
     // skip the letter if it has been marked correct
     if (!currTile.classList.contains("correct")) {
@@ -2232,7 +2236,8 @@ function update() {
       }
     }
   }
-
+  let totalGuesses = window.localStorage.getItem("totalGuesses") || 0;
+  window.localStorage.setItem("totalGuesses", Number(totalGuesses) + 1);
   row += 1; //start new row
   col = 0; //start at 0 for new row
 }
@@ -2256,3 +2261,89 @@ const animateCSS = (element, animation, prefix = "animate__") =>
 
     node.addEventListener("animationend", handleAnimationEnd, { once: true });
   });
+
+let updateTotalGames = () => {
+  let totalGames = window.localStorage.getItem("totalGames") || 0;
+  window.localStorage.setItem("totalGames", Number(totalGames) + 1);
+};
+
+let updateStatsModal = () => {
+  let currentStreak = window.localStorage.getItem("currentStreak");
+  let totalGames = window.localStorage.getItem("totalGames");
+  let totalWins = window.localStorage.getItem("totalWins");
+  let totalGuesses = window.localStorage.getItem("totalGuesses");
+
+  document.getElementById("total-played").textContent = totalGames;
+  document.getElementById("total-wins").textContent = totalWins;
+  document.getElementById("current-streak").textContent = currentStreak;
+
+  let winPct = Math.round((totalWins / totalGames) * 100) || 0;
+  document.getElementById("win-pct").textContent = `${winPct}%`;
+
+  let avgGuesses = (totalGuesses / totalGames).toFixed(2);
+  document.getElementById("avg-guesses").textContent = avgGuesses;
+};
+
+function initStatsModal() {
+  const modal = document.getElementById("stats-modal");
+
+  // Get the button that opens the modal
+  const btn = document.getElementById("stats");
+
+  // Get the <span> element that closes the modal
+  const span = document.getElementById("close-stats");
+
+  // When the user clicks on the button, open the modal
+  btn.addEventListener("click", function () {
+    updateStatsModal();
+    modal.style.display = "block";
+  });
+
+  // When the user clicks on <span> (x), close the modal
+  span.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.addEventListener("click", function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  });
+}
+
+function initHelpModal() {
+  const modal = document.getElementById("help-modal");
+
+  // Get the button that opens the modal
+  const btn = document.getElementById("help");
+
+  // Get the <span> element that closes the modal
+  const span = document.getElementById("close-help");
+
+  // When the user clicks on the button, open the modal
+  btn.addEventListener("click", function () {
+    modal.style.display = "block";
+  });
+
+  // When the user clicks on <span> (x), close the modal
+  span.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.addEventListener("click", function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  });
+}
+
+let preserveGameState = () => {};
+
+function showModal() {
+  if (!window.sessionStorage.getItem("help-modal")) {
+    document.getElementById("help-modal").style.display = "block";
+    window.sessionStorage.setItem("help-modal", true);
+  }
+}
