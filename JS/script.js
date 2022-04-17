@@ -2034,7 +2034,7 @@ numberRows.setProperty("--number-rows", WORD_LENGTH);
 let row = 0;
 let col = 0;
 let gameOver = false;
-let alertContainer = document.querySelector("[data-alert-container]");
+
 
 window.onload = function () {
   intialize();

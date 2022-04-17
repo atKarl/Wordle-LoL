@@ -14,7 +14,7 @@ body {
   height: 100%;
 }
 
-game {
+.game {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -144,7 +144,19 @@ header h1 {
   grid-template-rows: repeat(6, 4em);
   gap: 0.25em;
   margin-bottom: 1em;
+  
+  ;
 }
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .board{
+    grid-template-columns: repeat(var(--number-rows), 3.7em);
+    grid-template-rows: repeat(6, 3.7em);
+    gap: 0.15em;
+   
+  }
+  }
+
 
 .tile {
   color: white;
@@ -190,7 +202,7 @@ header h1 {
   background-color: hsl(115, 29%, 43%);
 }
 
-.tile.shake {
+/* .tile.shake {
   animation: shake 250ms ease-in-out;
 }
 .tile.dance {
@@ -266,11 +278,11 @@ header h1 {
 .alert.hide {
   opacity: 0;
   pointer-events: none;
-}
-
+} */
+/* 
 svg {
   pointer-events: none;
-}
+} */
 
 h3 {
   font-size: 1em;
@@ -294,7 +306,7 @@ h3 {
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 500px; /* Could be more or less, depending on screen size */
+  width: 70%; /* Could be more or less, depending on screen size */
   border-radius: 15px;
   color: #d7dadc;
   text-align: center;
@@ -325,5 +337,12 @@ h3 {
 .stats-group {
   display: flex;
   text-align: center;
-  align-items: center;
+  
+  justify-content: space-evenly;
 }
+
+/* #help-modal {
+  overflow: hidden;
+  margin-top: 10px;
+  height: 70%;
+} */
