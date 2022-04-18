@@ -2,7 +2,7 @@
 *::after,
 *::before {
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 :root {
   --number-rows: 0;
@@ -14,7 +14,7 @@ body {
   height: 100%;
 }
 
-game {
+.game {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -38,6 +38,8 @@ header {
   width: 100%;
   height: 51px;
   position: relative;
+  padding: 5px;
+  margin-bottom: 25px;
 }
 
 header h1 {
@@ -188,7 +190,7 @@ header h1 {
   background-color: hsl(115, 29%, 43%);
 }
 
-.tile.shake {
+/* .tile.shake {
   animation: shake 250ms ease-in-out;
 }
 .tile.dance {
@@ -264,13 +266,81 @@ header h1 {
 .alert.hide {
   opacity: 0;
   pointer-events: none;
-}
-
+} */
+/* 
 svg {
   pointer-events: none;
+} */
+
+h3 {
+  font-size: 1em;
 }
 
-#answer {
-  display: none;
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: hsl(240, 3%, 7%); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
+.modal-content {
+  background-color: #19191a;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 500px; /* Could be more or less, depending on screen size */
+  border-radius: 15px;
+  color: #d7dadc;
+  text-align: center;
+}
+.modal-content-help {
+  margin-top: 15px;
+}
+.modal-content img {
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+.modal a,
+.modal a:hover,
+.modal a:visited {
+  color: white;
+}
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.stats-group {
+  display: flex;
+  text-align: center;
+
+  justify-content: space-evenly;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .board {
+    grid-template-columns: repeat(var(--number-rows), 3.6em);
+    grid-template-rows: repeat(6, 3.6em);
+    gap: 0.12em;
+  }
+
+  .modal-content {
+    width: 70%;
+  }
+}
