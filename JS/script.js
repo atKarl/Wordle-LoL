@@ -2028,6 +2028,7 @@ const offsetFromDate = new Date(2022, 3, 13);
 const msOffset = Date.now() - offsetFromDate;
 const dayOffset = msOffset / 1000 / 60 / 60 / 24;
 const targetWord = targetWords[Math.floor(dayOffset)];
+let targetWordIndex = Math.floor(dayOffset);
 const WORD_LENGTH = targetWord.length;
 let numberRows = document.body.style; // define a variable that will be reused in the css
 numberRows.setProperty("--number-rows", WORD_LENGTH);
@@ -2036,13 +2037,15 @@ let col = 0;
 let gameOver = false;
 
 window.onload = function () {
-  intialize();
+  initLocalStorage();
+  initialize();
   initStatsModal();
   initHelpModal();
   showModal();
+  loadLocalStorage();
 };
 
-function intialize() {
+function initialize() {
   // Create the game board
   for (let r = 0; r < NUMBER_OF_GUESSES; r++) {
     for (let c = 0; c < WORD_LENGTH; c++) {
@@ -2107,7 +2110,6 @@ function processKey() {
 
 function processInput(e) {
   if (gameOver) return;
-
   // alert(e.code);
   if ("KeyA" <= e.code && e.code <= "KeyZ") {
     if (col < WORD_LENGTH) {
@@ -2206,6 +2208,7 @@ function update() {
         updateTotalGames();
         gameOver = true;
       }
+      preserveGameState();
     }, delay * c);
   }
 
@@ -2238,6 +2241,7 @@ function update() {
           // key.classList.add("wrong")
         }
       }
+      preserveGameState();
     }, delay * c);
   }
   let totalGuesses = window.localStorage.getItem("totalGuesses") || 0;
@@ -2343,7 +2347,15 @@ function initHelpModal() {
   });
 }
 
-let preserveGameState = () => {};
+let preserveGameState = () => {
+  const keyboardContainer = document.getElementById("keyboard");
+  window.localStorage.setItem("keyboardContainer", keyboardContainer.innerHTML);
+
+  const boardContainer = document.getElementById("board");
+  window.localStorage.setItem("boardContainer", boardContainer.innerHTML);
+  window.localStorage.setItem("storedRow", row);
+  window.localStorage.setItem("gameOverState", gameOver);
+};
 
 function showModal() {
   if (!window.sessionStorage.getItem("help-modal")) {
@@ -2351,3 +2363,51 @@ function showModal() {
     window.sessionStorage.setItem("help-modal", true);
   }
 }
+
+let initLocalStorage = () => {
+  const storedTargetWordIndex = window.localStorage.getItem(
+    "storedTargetWordIndex"
+  );
+  console.log(storedTargetWordIndex);
+  if (!storedTargetWordIndex) {
+    window.localStorage.setItem("storedTargetWordIndex", targetWordIndex);
+  }
+  console.log(storedTargetWordIndex);
+  if (
+    Number(window.localStorage.getItem("storedTargetWordIndex")) !==
+    targetWordIndex
+  ) {
+    resetGameState();
+  }
+};
+
+let loadLocalStorage = () => {
+  const storedBoardContainer = window.localStorage.getItem("boardContainer");
+  if (storedBoardContainer) {
+    document.getElementById("board").innerHTML = storedBoardContainer;
+  }
+  const storedKeyboardContainer =
+    window.localStorage.getItem("keyboardContainer");
+  if (storedKeyboardContainer) {
+    document.getElementById("keyboard").innerHTML = storedKeyboardContainer;
+    let keyTile = document.getElementsByClassName("key-tile");
+    console.log(keyTile);
+    for (let i = 0; i < keyTile.length; i++) {
+      keyTile[i].addEventListener("click", processKey);
+    }
+  }
+
+  let storedRow = window.localStorage.getItem("storedRow") || 0;
+  row = Number(storedRow);
+  let gameOverState = window.localStorage.getItem("gameOverState") || false;
+  gameOver = gameOverState == "true";
+};
+
+let resetGameState = () => {
+  window.localStorage.removeItem("keyboardContainer");
+  window.localStorage.removeItem("boardContainer");
+  window.localStorage.removeItem("storedRow");
+  window.localStorage.removeItem("storedTargetWordIndex");
+  window.localStorage.removeItem("gameOverState");
+};
+console.log(gameOver, typeof gameOver);
