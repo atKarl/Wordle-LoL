@@ -2035,6 +2035,7 @@ numberRows.setProperty("--number-rows", WORD_LENGTH);
 let row = 0;
 let col = 0;
 let gameOver = false;
+let shareArr = [];
 
 window.onload = function () {
   initLocalStorage();
@@ -2137,12 +2138,74 @@ function processInput(e) {
 
   if (!gameOver && row == NUMBER_OF_GUESSES) {
     window.localStorage.setItem("currentStreak", 0);
+    window.localStorage.setItem("shareButton", 1);
     updateTotalGames();
     gameOver = true;
     toastr.info(`Today's champion was ${targetWord}`);
     toastr.error("You've run out of guesses! Game over!");
+    let shareButton = document.getElementById("share-button");
+    shareButton.style.display = "block";
+    shareButton.addEventListener("click", shareFunction);
   }
 }
+let share = () => {
+  let board = window.localStorage.getItem("boardContainer");
+  console.log(board);
+  let tiles = board.split("</div>");
+  console.log(tiles);
+  console.log(tiles.length);
+  for (let i = 0; i < tiles.length; i++) {
+    let array = tiles[i].split(" ");
+    if (array.includes(`wrong"`) || array.includes("wrong")) {
+      shareArr.push(":black_large_square:");
+    }
+    if (array.includes(`correct"`) || array.includes("correct")) {
+      shareArr.push(":green_square:");
+    }
+    if (array.includes(`wrong-location"`) || array.includes("wrong-location")) {
+      shareArr.push(":yellow_square:");
+    }
+  }
+  console.log("share()", shareArr);
+  console.log(tiles);
+  console.log(board);
+};
+
+let separateRows = (arr, size) => {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i += size) {
+    newArr.push(arr.slice(i, i + size));
+  }
+  return newArr;
+};
+
+let collapseRows = (arr) => {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    newArr.push(arr[i].join(""));
+  }
+  return newArr;
+};
+
+const copyToClipboard = (str) => {
+  navigator.clipboard?.writeText && navigator.clipboard.writeText(str);
+};
+
+let shareFunction = () => {
+  share();
+  console.log(shareArr);
+  console.log(WORD_LENGTH);
+  console.log(separateRows(shareArr, WORD_LENGTH));
+
+  let finalShare = collapseRows(separateRows(shareArr, WORD_LENGTH)).join(
+    "\r\n"
+  );
+  console.log(finalShare);
+  copyToClipboard(
+    `Trundle #${targetWordIndex}\r\n\r\n${finalShare}\r\n\r\n https://trundle.atkarl.xyz`
+  );
+  toastr.info("Copied to clipboard!");
+};
 
 function update() {
   let guess = "";
@@ -2178,38 +2241,43 @@ function update() {
       letterCount[letter] = 1;
     }
   }
-
+  console.log(letterCount, "base");
   //first iteration, check all the correct ones first
   for (let c = 0; c < WORD_LENGTH; c++) {
     let currTile = document.getElementById(row.toString() + "-" + c.toString());
     let letter = currTile.innerText;
-    setTimeout(() => {
-      animateCSS(currTile, "rotateIn");
-      //Is it in the correct position?
-      if (targetWord[c] == letter.toLowerCase()) {
-        currTile.classList.add("correct");
+    // setTimeout(() => {
+    //   animateCSS(currTile, "rotateIn");
+    //Is it in the correct position?
+    if (targetWord[c] == letter.toLowerCase()) {
+      currTile.classList.add("correct");
 
-        let keyTile = document.getElementById("Key" + letter);
-        keyTile.classList.remove("wrong-location");
-        keyTile.classList.add("correct");
-        // key.classList.add("correct")
+      let keyTile = document.getElementById("Key" + letter);
+      keyTile.classList.remove("wrong-location");
+      keyTile.classList.add("correct");
+      // key.classList.add("correct")
 
-        correct += 1;
+      correct += 1;
 
-        letterCount[letter.toLowerCase()] -= 1; //deduct the letter count
-      }
+      letterCount[letter.toLowerCase()] -= 1; //deduct the letter count
+      console.log(letterCount, "correct");
+    }
 
-      if (correct === WORD_LENGTH) {
-        toastr.success("You Found The Right Champion");
-        let totalWins = window.localStorage.getItem("totalWins") || 0;
-        window.localStorage.setItem("totalWins", Number(totalWins) + 1);
-        let currentStreak = window.localStorage.getItem("currentStreak") || 0;
-        window.localStorage.setItem("currentStreak", Number(currentStreak) + 1);
-        updateTotalGames();
-        gameOver = true;
-      }
-      preserveGameState();
-    }, delay * c);
+    if (correct === WORD_LENGTH) {
+      window.localStorage.setItem("shareButton", 1);
+      toastr.success("You Found The Right Champion");
+      let totalWins = window.localStorage.getItem("totalWins") || 0;
+      window.localStorage.setItem("totalWins", Number(totalWins) + 1);
+      let currentStreak = window.localStorage.getItem("currentStreak") || 0;
+      window.localStorage.setItem("currentStreak", Number(currentStreak) + 1);
+      updateTotalGames();
+      let shareButton = document.getElementById("share-button");
+      shareButton.style.display = "block";
+      shareButton.addEventListener("click", shareFunction);
+      gameOver = true;
+    }
+    preserveGameState();
+    // }, delay * c);
   }
 
   //go again and mark which ones are present but in wrong position
@@ -2368,11 +2436,11 @@ let initLocalStorage = () => {
   const storedTargetWordIndex = window.localStorage.getItem(
     "storedTargetWordIndex"
   );
-  console.log(storedTargetWordIndex);
+
   if (!storedTargetWordIndex) {
     window.localStorage.setItem("storedTargetWordIndex", targetWordIndex);
   }
-  console.log(storedTargetWordIndex);
+
   if (
     Number(window.localStorage.getItem("storedTargetWordIndex")) !==
     targetWordIndex
@@ -2391,9 +2459,15 @@ let loadLocalStorage = () => {
   if (storedKeyboardContainer) {
     document.getElementById("keyboard").innerHTML = storedKeyboardContainer;
     let keyTile = document.getElementsByClassName("key-tile");
-    console.log(keyTile);
+
     for (let i = 0; i < keyTile.length; i++) {
       keyTile[i].addEventListener("click", processKey);
+    }
+    let storedShareButton = document.getElementById("share-button");
+    if (storedShareButton) {
+      let shareButton = document.getElementById("share-button");
+      shareButton.style.display = "block";
+      shareButton.addEventListener("click", shareFunction);
     }
   }
 
@@ -2409,5 +2483,5 @@ let resetGameState = () => {
   window.localStorage.removeItem("storedRow");
   window.localStorage.removeItem("storedTargetWordIndex");
   window.localStorage.removeItem("gameOverState");
+  window.localStorage.removeItem("shareButton");
 };
-console.log(gameOver, typeof gameOver);
