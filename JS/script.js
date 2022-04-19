@@ -2150,10 +2150,7 @@ function processInput(e) {
 }
 let share = () => {
   let board = window.localStorage.getItem("boardContainer");
-  console.log(board);
   let tiles = board.split("</div>");
-  console.log(tiles);
-  console.log(tiles.length);
   for (let i = 0; i < tiles.length; i++) {
     let array = tiles[i].split(" ");
     if (array.includes(`wrong"`) || array.includes("wrong")) {
@@ -2166,9 +2163,6 @@ let share = () => {
       shareArr.push(":yellow_square:");
     }
   }
-  console.log("share()", shareArr);
-  console.log(tiles);
-  console.log(board);
 };
 
 let separateRows = (arr, size) => {
@@ -2193,14 +2187,10 @@ const copyToClipboard = (str) => {
 
 let shareFunction = () => {
   share();
-  console.log(shareArr);
-  console.log(WORD_LENGTH);
-  console.log(separateRows(shareArr, WORD_LENGTH));
 
   let finalShare = collapseRows(separateRows(shareArr, WORD_LENGTH)).join(
     "\r\n"
   );
-  console.log(finalShare);
   copyToClipboard(
     `Trundle #${targetWordIndex}\r\n\r\n${finalShare}\r\n\r\n https://trundle.atkarl.xyz`
   );
@@ -2241,7 +2231,6 @@ function update() {
       letterCount[letter] = 1;
     }
   }
-  console.log(letterCount, "base");
   //first iteration, check all the correct ones first
   for (let c = 0; c < WORD_LENGTH; c++) {
     let currTile = document.getElementById(row.toString() + "-" + c.toString());
@@ -2260,7 +2249,6 @@ function update() {
       correct += 1;
 
       letterCount[letter.toLowerCase()] -= 1; //deduct the letter count
-      console.log(letterCount, "correct");
     }
 
     if (correct === WORD_LENGTH) {
