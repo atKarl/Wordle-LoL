@@ -2154,13 +2154,13 @@ let share = () => {
   for (let i = 0; i < tiles.length; i++) {
     let array = tiles[i].split(" ");
     if (array.includes(`wrong"`) || array.includes("wrong")) {
-      shareArr.push(":black_large_square:");
+      shareArr.push("⬛");
     }
     if (array.includes(`correct"`) || array.includes("correct")) {
-      shareArr.push(":green_square:");
+      shareArr.push("🟩");
     }
     if (array.includes(`wrong-location"`) || array.includes("wrong-location")) {
-      shareArr.push(":yellow_square:");
+      shareArr.push("🟨");
     }
   }
 };
