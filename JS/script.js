@@ -2040,12 +2040,12 @@ let fullDate = new Date();
 let today = fullDate.getDate();
 
 window.onload = function () {
-  initLocalStorage();
   initialize();
+  initLocalStorage();
+  loadLocalStorage();
   initStatsModal();
   initHelpModal();
   showModal();
-  loadLocalStorage();
 };
 
 function initialize() {
