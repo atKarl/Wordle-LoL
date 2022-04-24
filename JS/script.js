@@ -2036,6 +2036,8 @@ let row = 0;
 let col = 0;
 let gameOver = false;
 let shareArr = [];
+let fullDate = new Date();
+let today = fullDate.getDate();
 
 window.onload = function () {
   initLocalStorage();
@@ -2435,6 +2437,14 @@ let initLocalStorage = () => {
   ) {
     resetGameState();
   }
+
+  const storedDate = window.localStorage.getItem("storedDate");
+  if (!storedDate) {
+    window.localStorage.setItem("storedDate", today);
+  }
+  if (Number(window.localStorage.getItem("storedDate")) !== today) {
+    resetGameState();
+  }
 };
 
 let loadLocalStorage = () => {
@@ -2472,4 +2482,5 @@ let resetGameState = () => {
   window.localStorage.removeItem("storedTargetWordIndex");
   window.localStorage.removeItem("gameOverState");
   window.localStorage.removeItem("shareButton");
+  window.localStorage.removeItem("storedDate");
 };
