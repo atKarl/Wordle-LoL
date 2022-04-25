@@ -2436,14 +2436,18 @@ let initLocalStorage = () => {
     targetWordIndex
   ) {
     resetGameState();
+    window.localStorage.setItem("storedTargetWordIndex", targetWordIndex);
+    window.localStorage.setItem("storedDate", today);
   }
-
+  
   const storedDate = window.localStorage.getItem("storedDate");
   if (!storedDate) {
     window.localStorage.setItem("storedDate", today);
   }
   if (Number(window.localStorage.getItem("storedDate")) !== today) {
     resetGameState();
+    window.localStorage.setItem("storedDate", today);
+    window.localStorage.setItem("storedTargetWordIndex", targetWordIndex);
   }
 };
 
