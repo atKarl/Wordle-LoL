@@ -2121,7 +2121,6 @@ function processInput(e) {
       );
       animateCSS(currTile, "zoomIn");
       if (currTile.innerText == "") {
-        console.log(e);
         if (e.key === undefined) currTile.innerText = e.code[3];
         else currTile.innerText = e.key;
         col += 1;
