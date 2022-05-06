@@ -2121,7 +2121,8 @@ function processInput(e) {
       );
       animateCSS(currTile, "zoomIn");
       if (currTile.innerText == "") {
-        currTile.innerText = e.code[3];
+        if (e.key === undefined) currTile.innerText = e.code[3];
+        else currTile.innerText = e.key;
         col += 1;
       }
     }
