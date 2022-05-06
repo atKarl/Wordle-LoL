@@ -22,9 +22,60 @@
       rel="stylesheet"
     />
     <script src="/JS/script.js" defer></script>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-PCX3V3N");
+    </script>
+    <!-- End Google Tag Manager -->
     <title>Trundle</title>
+    <!-- Primary Meta Tags -->
+    <title>Trundle</title>
+    <meta name="title" content="Trundle" />
+    <meta
+      name="description"
+      content="Trundle is a free Wordle-like game where your goal is to find the right champion name in the least amount of tries!"
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://trundle.atkarl.xyz/" />
+    <meta property="og:title" content="Trundle" />
+    <meta
+      property="og:description"
+      content="Trundle is a free Wordle-like game where your goal is to find the right champion name in the least amount of tries!"
+    />
+    <meta property="og:image" content="https://i.postimg.cc/vBZLVMgb/trundle.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://trundle.atkarl.xyz/" />
+    <meta property="twitter:title" content="Trundle" />
+    <meta
+      property="twitter:description"
+      content="Trundle is a free Wordle-like game where your goal is to find the right champion name in the least amount of tries!"
+    />
+    <meta property="twitter:image" content="https://i.postimg.cc/vBZLVMgb/trundle.png" />
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-PCX3V3N"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <game class="game">
       <header>
         <div id="help" class="icon">
@@ -146,6 +197,9 @@
               <strong>Streak</strong>:<br />
               <span id="current-streak"></span>
             </h3>
+          </div>
+          <div id="share">
+            <p><button id="share-button">Share</button></p>
           </div>
         </div>
       </div>
