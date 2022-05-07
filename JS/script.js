@@ -2113,17 +2113,15 @@ function processKey() {
 
 function processInput(e) {
   if (gameOver) return;
-  // alert(e.code);
-  if (("KeyA" <= e.code && e.code <= "KeyZ") || e.code === "Semicolon" ) {
+  if (("KeyA" <= e.code && e.code <= "KeyZ") || e.code === "Semicolon") {
     if (col < WORD_LENGTH) {
       let currTile = document.getElementById(
         row.toString() + "-" + col.toString()
       );
       animateCSS(currTile, "zoomIn");
       if (currTile.innerText == "") {
-        console.log(e.code);
         if (e.key === undefined) currTile.innerText = e.code[3];
-        if (e.key === "," || e.code ==="Semicolon") currTile.innerText = "m";
+        if (e.key === "," || e.code === "Semicolon") currTile.innerText = "m";
         else currTile.innerText = e.key;
         col += 1;
       }
@@ -2442,7 +2440,7 @@ let initLocalStorage = () => {
     window.localStorage.setItem("storedTargetWordIndex", targetWordIndex);
     window.localStorage.setItem("storedDate", today);
   }
-  
+
   const storedDate = window.localStorage.getItem("storedDate");
   if (!storedDate) {
     window.localStorage.setItem("storedDate", today);
