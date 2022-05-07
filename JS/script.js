@@ -2120,7 +2120,6 @@ function processInput(e) {
       );
       animateCSS(currTile, "zoomIn");
       if (currTile.innerText == "") {
-        console.log(e.code, e.key);
         if (e.key === undefined) currTile.innerText = e.code[3];
         else if (e.key === "," || e.code === "Semicolon") currTile.innerText = "m";
         else currTile.innerText = e.key;
