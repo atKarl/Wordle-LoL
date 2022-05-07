@@ -2121,7 +2121,7 @@ function processInput(e) {
       animateCSS(currTile, "zoomIn");
       if (currTile.innerText == "") {
         if (e.key === undefined) currTile.innerText = e.code[3];
-        if (e.key === "," || e.code === "Semicolon") currTile.innerText = "m";
+        else if (e.key === "," || e.code === "Semicolon") currTile.innerText = "m";
         else currTile.innerText = e.key;
         col += 1;
       }
