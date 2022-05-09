@@ -97,12 +97,14 @@ header h1 {
   flex: 1;
   color: white;
   fill: white;
+  user-select: none;
   /* transition: background-color 0.3s ease-in-out; */
 }
 
 .key-tile.big {
   font-size: 12px;
   flex-grow: 1.5;
+  user-select: none;
 }
 
 .key > svg {
@@ -342,6 +344,9 @@ h3 {
 
   .modal-content {
     width: 80vw;
+  }
+  .key-tile {
+    user-select: none;
   }
 }
 #share-button {
