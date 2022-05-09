@@ -104,6 +104,7 @@ header h1 {
 .key-tile.big {
   font-size: 12px;
   flex-grow: 1.5;
+  user-select: none;
 }
 
 .key > svg {
