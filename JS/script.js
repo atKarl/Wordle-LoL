@@ -2417,9 +2417,9 @@ let preserveGameState = () => {
 };
 
 function showModal() {
-  if (!window.sessionStorage.getItem("help-modal")) {
+  if (!window.localStorage.getItem("help-modal")) {
     document.getElementById("help-modal").style.display = "block";
-    window.sessionStorage.setItem("help-modal", true);
+    window.localStorage.setItem("help-modal", true);
   }
 }
 
