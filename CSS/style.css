@@ -334,7 +334,7 @@ h3 {
   justify-content: space-evenly;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-device-width: 800px) {
   /* For mobile phones: */
   .board {
     grid-template-columns: repeat(var(--number-rows), 3.1em);
