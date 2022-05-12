@@ -337,8 +337,8 @@ h3 {
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
   .board {
-    grid-template-columns: repeat(var(--number-rows), 3.25em);
-    grid-template-rows: repeat(6, 3.25em);
+    grid-template-columns: repeat(var(--number-rows), 3.1em);
+    grid-template-rows: repeat(6, 3.1em);
     gap: 0.10em;
   }
 
