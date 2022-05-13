@@ -146,7 +146,6 @@ header h1 {
   grid-template-rows: repeat(6, 4em);
   gap: 0.25em;
   margin-bottom: 1em;
-  background-color: blue;
 }
 
 .tile {
@@ -341,7 +340,6 @@ h3 {
     grid-template-columns: repeat(var(--number-rows), 3.1em);
     grid-template-rows: repeat(6, 3.1em);
     gap: 0.10em;
-    background-color: red;
   }
 
   .modal-content {
